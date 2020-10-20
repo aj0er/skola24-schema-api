@@ -98,15 +98,11 @@ function getRawScheduleBySignature($key, $domain, $signature, $width, $height, $
 }
 
 function getSchedule($domain, $signature, $wholeWeek){
-    echo "aaa";
     $sched = getRawScheduleBySignature(getRenderKey(), $domain, $signature, $_GET["width"], $_GET["height"], $wholeWeek);
-    return json_encode($sched);
-    /*
     $timetable = json_decode($sched["data"]["timetableJson"], true);
-    
     $timetable["parsed"] = parseTextList($timetable["textList"]);
     
-    return json_encode($timetable);*/
+    return json_encode($timetable);
 }
 
 function encryptSignature($id){
@@ -208,15 +204,13 @@ switch($method){
     }
 
     case "getSchedule":{
-        echo "a";
-        /*
         $wholeWeek  = $_GET["wholeWeek"] === "true" ? true : false;
         $cachedData = getCache($ip, $wholeWeek);
 
         if(isset($cachedData)){
             echo $cachedData;
             return;
-        }*/
+        }
         
         $data = getSchedule($_GET["domain"], $_GET["signature"], $wholeWeek);
         addToCache($ip, $data, $wholeWeek);
@@ -224,7 +218,7 @@ switch($method){
         break;
     }
 
-    /*    
+    /* TODO    
     case "getRawSchedule":{
         
         if(!isset($_GET['id']))
